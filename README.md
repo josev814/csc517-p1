@@ -67,7 +67,7 @@ Right-Click docker-compose.yml and click compose up
 
 > Note: For windows users
 > 
-> There is a compose_project.ps1 script that will standup and destroy the docker compose project for you
+> There is a compose_project.ps1 script that will start up and destroy the docker compose project for you
 > Run ./BuildTools/scripts/compose_project.ps1 in Powershell to read how to use it
 
 ### The compose stack
