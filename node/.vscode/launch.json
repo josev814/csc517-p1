@@ -8,14 +8,14 @@
             "type": "node-terminal",
             "name": "Run Script: test",
             "request": "launch",
-            "command": "npm run test",
+            "command": "pnpm test",
             "cwd": "${workspaceFolder}"
         },
         {
             "type": "node-terminal",
             "name": "Run Script: test:watch",
             "request": "launch",
-            "command": "npm run test:watch",
+            "command": "pnpm test:watch",
             "cwd": "${workspaceFolder}"
         }
     ]
