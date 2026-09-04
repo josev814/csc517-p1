@@ -1,0 +1,30 @@
+ARG RUBY_VERSION=3.4
+ARG RUBY_OS=slim-trixie
+FROM ruby:${RUBY_VERSION}-${RUBY_OS}
+
+RUN apt-get update \
+    && apt-get install -y \
+        # for nokogiri
+        libyaml-dev \
+        # for building native extensions
+        build-essential \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* 
+
+WORKDIR /app
+
+# Copy the Gemfile and Gemfile.lock first to leverage Docker cache
+COPY ruby/Gemfile ruby/Gemfile.lock ./
+
+# Update RubyGems and install Bundler
+RUN gem update --system && gem install bundler:2.4.14
+
+# Copy the rest of the application code
+COPY ruby/ ./
+
+# Install the gems specified in the Gemfile
+RUN bundle install
+
+COPY "BuildTools/ruby/entrypoint.sh" /
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD [ "/bin/bash", "-c", "sleep infinity" ]

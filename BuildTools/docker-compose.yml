@@ -1,0 +1,56 @@
+name: RubyIntro
+
+services:
+  ruby:
+    build:
+      context: ..
+      dockerfile: BuildTools/ruby/dockerfile
+      args:
+        - RUBY_VERSION=3.4
+        - RUBY_OS=slim-trixie
+    image: ruby_intro:local
+    pull_policy: build
+    container_name: ruby_intro
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ../ruby/:/app
+      - gem_cache:/usr/local/bundle
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - public
+  nodejs:
+    build:
+      context: ..
+      dockerfile: BuildTools/node/dockerfile
+      args:
+        - NODE_VERSION=24
+        - NODE_OS=trixie-slim
+    image: nodejs:local
+    pull_policy: build
+    container_name: nodejs
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ../node/:/app
+      - pnpm_store:/app/.pnpm-store
+      - node_modules:/app/node_modules
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - public
+
+networks:
+  public:
+
+volumes:
+  gem_cache:
+  pnpm_store:
+  node_modules:

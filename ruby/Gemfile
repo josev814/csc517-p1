@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+group :development, :test do
+  gem 'ruby-lsp-rspec'
+  gem 'simplecov'
+  gem 'simplecov-json'
+  gem 'simplecov-html'
+  gem 'simplecov-console'
+  gem 'rspec-rails'
+  gem 'minitest'
+end

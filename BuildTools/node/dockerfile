@@ -1,0 +1,19 @@
+ARG NODE_VERSION=24
+ARG NODE_OS=trixie-slim
+FROM node:${NODE_VERSION}-${NODE_OS}
+
+WORKDIR /app
+
+# Install pnpm globally to speed up installs
+RUN npm install -g pnpm
+
+COPY node/ ./
+
+# Install dependencies specified
+RUN if [ -f package-lock.json ]; then pnpm import && rm package-lock.json; fi \
+    && pnpm install
+
+COPY "BuildTools/node/entrypoint.sh" /
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD [ "/bin/bash", "-c", "sleep infinity" ]
